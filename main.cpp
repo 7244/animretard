@@ -1,3 +1,5 @@
+#include <WITCH/WITCH.h>
+
 #include <fan/graphics/opengl/3D/objects/fms.h>
 #include <iomanip>
 
@@ -5,76 +7,87 @@
 
 #include <cctype>
 
-std::vector<std::vector<std::string>> bone_names_default = {
-  {"Hips", "Torso"},
-  {"Right_Up_Leg", "Upper_Leg_R", "RightUpLeg", "Upper_Leg.R", "R_UpperLeg"},
-  {"Lower_Leg_R", "Lower_Leg.R", "Right_knee", "R_LowerLeg"},
-  {"Right_Foot", "Foot_R", "RightFoot", "Foot.R", "Right_ankle", "R_Foot"},
-  {"Right_Toe_Base", "RightToeBase", "Right_toe", "R_ToeBase"},
-  {"Right_Toe_End"},
-  {"Spine"},
-  {"Spine1", "Chest", "UpperChest"},
-  {"Spine2"},
-  {"Neck"},
-  {"Head"},
-  {"Head_Top_End"},
-  {"Left_Shoulder", "Upper_Arm_L", "L_Shoulder"},
-  {"Left_Arm", "L_UpperArm"},
-  {"Left_Fore_Arm", "Lower_Arm_L", "Left_elbow", "L_LowerArm"},
-  {"Left_Hand", "Hand_L", "Left_wrist", "L_Hand"},
-  {"Left_Hand_Thumb1", "Thumb0_L"},
-  {"Left_Hand_Thumb2", "Thumb1_L"},
-  {"Left_Hand_Thumb3", "Thumb2_L"},
-  {"Left_Hand_Thumb4", "Thumb2Tip_L"},
-  {"Left_Hand_Index1", "IndexFinger1_L"},
-  {"Left_Hand_Index2", "IndexFinger2_L"},
-  {"Left_Hand_Index3", "IndexFinger3_L"},
-  {"Left_Hand_Index4", "IndexFinger3Tip_L"},
-  {"Left_Hand_Middle1", "MiddleFinger1_L"},
-  {"Left_Hand_Middle2", "MiddleFinger2_L"},
-  {"Left_Hand_Middle3", "MiddleFinger3_L"},
-  {"Left_Hand_Middle4", "MiddleFinger3Tip_L"},
-  {"Left_Hand_Ring1", "RingFinger1_L"},
-  {"Left_Hand_Ring2", "RingFinger2_L"},
-  {"Left_Hand_Ring3", "RingFinger3_L"},
-  {"Left_Hand_Ring4", "RingFinger3Tip_L"},
-  {"Left_Hand_Pinky1", "LittleFinger1_L"},
-  {"Left_Hand_Pinky2", "LittleFinger2_L"},
-  {"Left_Hand_Pinky3", "LittleFinger3_L"},
-  {"Left_Hand_Pinky4", "LittleFinger3Tip_L"},
-  {"Right_Shoulder", "Upper_Arm_R", "R_Shoulder"},
-  {"Right_Arm", "R_UpperArm"},
-  {"Right_Fore_Arm", "Lower_Arm_R", "Right_elbow", "R_LowerArm"},
-  {"Right_Hand", "Hand_R", "Right_wrist", "R_Hand"},
-  {"Right_Hand_Thumb1", "Thumb0_R"},
-  {"Right_Hand_Thumb2", "Thumb1_R"},
-  {"Right_Hand_Thumb3", "Thumb2_R"},
-  {"Right_Hand_Thumb4", "Thumb2Tip_R"},
-  {"Right_Hand_Index1", "IndexFinger1_R"},
-  {"Right_Hand_Index2", "IndexFinger2_R"},
-  {"Right_Hand_Index3", "IndexFinger3_R"},
-  {"Right_Hand_Index4", "IndexFinger3Tip_R"},
-  {"Right_Hand_Middle1", "MiddleFinger1_R"},
-  {"Right_Hand_Middle2", "MiddleFinger2_R"},
-  {"Right_Hand_Middle3", "MiddleFinger3_R"},
-  {"Right_Hand_Middle4", "MiddleFinger3Tip_R"},
-  {"Right_Hand_Ring1", "RingFinger1_R"},
-  {"Right_Hand_Ring2", "RingFinger2_R"},
-  {"Right_Hand_Ring3", "RingFinger3_R"},
-  {"Right_Hand_Ring4", "RingFinger3Tip_R"},
-  {"Right_Hand_Pinky1", "LittleFinger1_R"},
-  {"Right_Hand_Pinky2", "LittleFinger2_R"},
-  {"Right_Hand_Pinky3", "LittleFinger3_R"},
-  {"Right_Hand_Pinky4", "LittleFinger3Tip_R"},
-  {"Left_Up_Leg", "Upper_Leg_L", "LeftUpLeg", "Upper_Leg.L", "L_UpperLeg"},
-  {"Lower_Leg_L", "Lower_Leg.L", "Left_knee", "L_LowerLeg"},
-  {"Left_Foot", "Foot_L", "LeftFoot", "Foot.L", "Left_ankle", "L_Foot"},
-  {"Left_Toe_Base", "LeftToeBase", "Left_toe", "L_ToeBase"},
-  {"Left_Toe_End"}
+struct bone_names_default_t : __dme_inherit(bone_names_default_t, std::vector<std::string>){
+  #define d(name, ...) __dme(name) = {{#name, ##__VA_ARGS__}};
+  d(hips, "Torso");
+  d(right_up_leg, "Upper_Leg_R", "RightUpLeg", "Upper_Leg.R", "R_UpperLeg");
+  d(lower_leg_r, "Lower_Leg.R", "Right_knee", "R_LowerLeg");
+  d(right_foot, "Foot_R", "RightFoot", "Foot.R", "Right_ankle", "R_Foot");
+  d(right_toe_base, "RightToeBase", "Right_toe", "R_ToeBase");
+  d(right_toe_end);
+  d(spine);
+  d(spine1, "Chest", "UpperChest");
+  d(spine2);
+  d(neck);
+  d(head);
+  d(head_top_end);
+  d(left_shoulder, "Upper_Arm_L", "L_Shoulder");
+  d(left_arm, "L_UpperArm");
+  d(left_fore_arm, "Lower_Arm_L", "Left_elbow", "L_LowerArm");
+  d(left_hand, "Hand_L", "Left_wrist", "L_Hand");
+  d(left_hand_thumb1, "Thumb0_L");
+  d(left_hand_thumb2, "Thumb1_L");
+  d(left_hand_thumb3, "Thumb2_L");
+  d(left_hand_thumb4, "Thumb2Tip_L");
+  d(left_hand_index1, "IndexFinger1_L");
+  d(left_hand_index2, "IndexFinger2_L");
+  d(left_hand_index3, "IndexFinger3_L");
+  d(left_hand_index4, "IndexFinger3Tip_L");
+  d(left_hand_middle1, "MiddleFinger1_L");
+  d(left_hand_middle2, "MiddleFinger2_L");
+  d(left_hand_middle3, "MiddleFinger3_L");
+  d(left_hand_middle4, "MiddleFinger3Tip_L");
+  d(left_hand_ring1, "RingFinger1_L");
+  d(left_hand_ring2, "RingFinger2_L");
+  d(left_hand_ring3, "RingFinger3_L");
+  d(left_hand_ring4, "RingFinger3Tip_L");
+  d(left_hand_pinky1, "LittleFinger1_L");
+  d(left_hand_pinky2, "LittleFinger2_L");
+  d(left_hand_pinky3, "LittleFinger3_L");
+  d(left_hand_pinky4, "LittleFinger3Tip_L");
+  d(right_shoulder, "Upper_Arm_R", "R_Shoulder");
+  d(right_arm, "R_UpperArm");
+  d(right_fore_arm, "Lower_Arm_R", "Right_elbow", "R_LowerArm");
+  d(right_hand, "Hand_R", "Right_wrist", "R_Hand");
+  d(right_hand_thumb1, "Thumb0_R");
+  d(right_hand_thumb2, "Thumb1_R");
+  d(right_hand_thumb3, "Thumb2_R");
+  d(right_hand_thumb4, "Thumb2Tip_R");
+  d(right_hand_index1, "IndexFinger1_R");
+  d(right_hand_index2, "IndexFinger2_R");
+  d(right_hand_index3, "IndexFinger3_R");
+  d(right_hand_index4, "IndexFinger3Tip_R");
+  d(right_hand_middle1, "MiddleFinger1_R");
+  d(right_hand_middle2, "MiddleFinger2_R");
+  d(right_hand_middle3, "MiddleFinger3_R");
+  d(right_hand_middle4, "MiddleFinger3Tip_R");
+  d(right_hand_ring1, "RingFinger1_R");
+  d(right_hand_ring2, "RingFinger2_R");
+  d(right_hand_ring3, "RingFinger3_R");
+  d(right_hand_ring4, "RingFinger3Tip_R");
+  d(right_hand_pinky1, "LittleFinger1_R");
+  d(right_hand_pinky2, "LittleFinger2_R");
+  d(right_hand_pinky3, "LittleFinger3_R");
+  d(right_hand_pinky4, "LittleFinger3Tip_R");
+  d(left_up_leg, "Upper_Leg_L", "LeftUpLeg", "Upper_Leg.L", "L_UpperLeg");
+  d(lower_leg_l, "Lower_Leg.L", "Left_knee", "L_LowerLeg");
+  d(left_foot, "Foot_L", "LeftFoot", "Foot.L", "Left_ankle", "L_Foot");
+  d(left_toe_base, "LeftToeBase", "Left_toe", "L_ToeBase");
+  d(left_toe_end);
+  #undef d
+
+  uintptr_t size(){
+    return this->GetMemberAmount();
+  }
+  auto &operator[](uintptr_t i){
+    return *this->NA(i);
+  }
 };
 
-std::vector<std::vector<std::string>> bone_names_anim = bone_names_default;
-std::vector<std::vector<std::string>> bone_names_model = bone_names_default;
+bone_names_default_t bone_names_default;
+
+bone_names_default_t bone_names_anim = bone_names_default;
+bone_names_default_t bone_names_model = bone_names_default;
 
 uintptr_t get_bone_name_index(auto &iteration, std::string from){
   uintptr_t longest_name_id = (uintptr_t)-1;
@@ -132,8 +145,8 @@ std::string get_model_bone_name(uintptr_t name_index, auto &model){
   model.iterate_bones(*model.root_bone, [&](fan_3d::model::bone_t& bone){
     std::string from = bone.name;
 
-    for(uintptr_t bni1 = 0; bni1 < bone_names_model[name_index].size(); bni1++){
-      std::string bn = bone_names_model[name_index][bni1];
+    for(uintptr_t bni1 = 0; bni1 < bone_names_model.NA(name_index)->size(); bni1++){
+      std::string bn = (*bone_names_model.NA(name_index))[bni1];
       for(uintptr_t ip = 0; ip < from.size(); ip++){
         uintptr_t bni = 0;
         auto nfrom = from.substr(ip);
@@ -231,7 +244,7 @@ void solve_legs(auto &iterator, auto &vector){
       assert(0);
     }
 
-    vector[index].push_back("Left_leg");
+    vector.NA(index)->push_back("Left_leg");
   }
 
   uint8_t right_leg_meaning = (uint8_t)-1;
@@ -290,7 +303,7 @@ void solve_legs(auto &iterator, auto &vector){
       assert(0);
     }
 
-    vector[index].push_back("Right_leg");
+    vector.NA(index)->push_back("Right_leg");
   }
 }
 
@@ -298,7 +311,7 @@ void mapper(fan_3d::model::fms_t& model, fan_3d::model::fms_t& anim){
   solve_legs(anim, bone_names_anim);
   solve_legs(model, bone_names_model);
 
-  anim.iterate_bones(*anim.root_bone, [&](fan_3d::model::bone_t& bone) {
+  anim.iterate_bones(*anim.root_bone, [&](fan_3d::model::bone_t& bone){
     auto bone_name_index = get_bone_name_index(bone_names_anim, bone.name);
     if(bone_name_index == (uintptr_t)-1){
       printf("f \"%s\"\n", bone.name.c_str());
@@ -306,10 +319,10 @@ void mapper(fan_3d::model::fms_t& model, fan_3d::model::fms_t& anim){
     else{
       auto solved_bone_name = get_model_bone_name(bone_name_index, model);
       if(solved_bone_name.size() == 0){
-        printf("nu \"%s\" -> \"%s\"\n", bone.name.c_str(), bone_names_default[bone_name_index][0].c_str());
+        printf("nu \"%s\" -> \"%s\"\n", bone.name.c_str(), bone_names_default.NA(bone_name_index)->sn);
       }
       else{
-        printf("yay \"%s\" -> \"%s\" -> \"%s\"\n", bone.name.c_str(), bone_names_default[bone_name_index][0].c_str(), solved_bone_name.c_str());
+        printf("yay \"%s\" -> \"%s\" -> \"%s\"\n", bone.name.c_str(), bone_names_default.NA(bone_name_index)->sn, solved_bone_name.c_str());
       }
     }
   });
