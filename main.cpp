@@ -7,21 +7,21 @@
 
 std::vector<std::vector<std::string>> bone_names_default = {
   {"Hips", "Torso"},
-  {"Right_Up_Leg", "Upper_Leg_R", "RightUpLeg", "Upper_Leg.R"},
-  {"Lower_Leg_R", "Lower_Leg.R", "Right_knee"},
-  {"Right_Foot", "Foot_R", "RightFoot", "Foot.R", "Right_ankle"},
-  {"Right_Toe_Base", "RightToeBase", "Right_toe"},
+  {"Right_Up_Leg", "Upper_Leg_R", "RightUpLeg", "Upper_Leg.R", "R_UpperLeg"},
+  {"Lower_Leg_R", "Lower_Leg.R", "Right_knee", "R_LowerLeg"},
+  {"Right_Foot", "Foot_R", "RightFoot", "Foot.R", "Right_ankle", "R_Foot"},
+  {"Right_Toe_Base", "RightToeBase", "Right_toe", "R_ToeBase"},
   {"Right_Toe_End"},
   {"Spine"},
-  {"Spine1", "Chest"},
+  {"Spine1", "Chest", "UpperChest"},
   {"Spine2"},
   {"Neck"},
   {"Head"},
   {"Head_Top_End"},
-  {"Left_Shoulder", "Upper_Arm_L"},
-  {"Left_Arm"},
-  {"Left_Fore_Arm", "Lower_Arm_L", "Left_elbow"},
-  {"Left_Hand", "Hand_L", "Left_wrist"},
+  {"Left_Shoulder", "Upper_Arm_L", "L_Shoulder"},
+  {"Left_Arm", "L_UpperArm"},
+  {"Left_Fore_Arm", "Lower_Arm_L", "Left_elbow", "L_LowerArm"},
+  {"Left_Hand", "Hand_L", "Left_wrist", "L_Hand"},
   {"Left_Hand_Thumb1", "Thumb0_L"},
   {"Left_Hand_Thumb2", "Thumb1_L"},
   {"Left_Hand_Thumb3", "Thumb2_L"},
@@ -42,10 +42,10 @@ std::vector<std::vector<std::string>> bone_names_default = {
   {"Left_Hand_Pinky2", "LittleFinger2_L"},
   {"Left_Hand_Pinky3", "LittleFinger3_L"},
   {"Left_Hand_Pinky4", "LittleFinger3Tip_L"},
-  {"Right_Shoulder", "Upper_Arm_R"},
-  {"Right_Arm"},
-  {"Right_Fore_Arm", "Lower_Arm_R", "Right_elbow"},
-  {"Right_Hand", "Hand_R", "Right_wrist"},
+  {"Right_Shoulder", "Upper_Arm_R", "R_Shoulder"},
+  {"Right_Arm", "R_UpperArm"},
+  {"Right_Fore_Arm", "Lower_Arm_R", "Right_elbow", "R_LowerArm"},
+  {"Right_Hand", "Hand_R", "Right_wrist", "R_Hand"},
   {"Right_Hand_Thumb1", "Thumb0_R"},
   {"Right_Hand_Thumb2", "Thumb1_R"},
   {"Right_Hand_Thumb3", "Thumb2_R"},
@@ -66,10 +66,10 @@ std::vector<std::vector<std::string>> bone_names_default = {
   {"Right_Hand_Pinky2", "LittleFinger2_R"},
   {"Right_Hand_Pinky3", "LittleFinger3_R"},
   {"Right_Hand_Pinky4", "LittleFinger3Tip_R"},
-  {"Left_Up_Leg", "Upper_Leg_L", "LeftUpLeg", "Upper_Leg.L"},
-  {"Lower_Leg_L", "Lower_Leg.L", "Left_knee"},
-  {"Left_Foot", "Foot_L", "LeftFoot", "Foot.L", "Left_ankle"},
-  {"Left_Toe_Base", "LeftToeBase", "Left_toe"},
+  {"Left_Up_Leg", "Upper_Leg_L", "LeftUpLeg", "Upper_Leg.L", "L_UpperLeg"},
+  {"Lower_Leg_L", "Lower_Leg.L", "Left_knee", "L_LowerLeg"},
+  {"Left_Foot", "Foot_L", "LeftFoot", "Foot.L", "Left_ankle", "L_Foot"},
+  {"Left_Toe_Base", "LeftToeBase", "Left_toe", "L_ToeBase"},
   {"Left_Toe_End"}
 };
 
@@ -141,10 +141,10 @@ std::string get_model_bone_name(uintptr_t name_index, auto &model){
         while(1){
           if(bni == bn.size()){
             if(
-              (bni > longest_length) ||
-              (from.size() < shortest_length_from)
+              (from.size() < shortest_length_from) ||
+              (from.size() == shortest_length_from && bni > longest_length)
             ){
-              longest_name = bn;
+              longest_name = from;
               longest_length = bni;
               shortest_length_from = from.size();
             }
